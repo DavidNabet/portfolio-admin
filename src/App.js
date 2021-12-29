@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import Header from "./components/Nav";
+import {
+  Switch,
+  Route,
+  Redirect,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import Login from "./containers/Login";
+import Publish from "./containers/Publish";
+import Cookies from "js-cookie";
 function App() {
+  const [user, setUser] = useState(Cookies.get("token") || null);
+
+  const setUserToken = (token) => {
+    if (token) {
+      Cookies.set("token", token);
+      setUser(token);
+    } else {
+      Cookies.remove("token");
+      setUser(null);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header userToken={user} setUserToken={setUserToken} />
+      <Switch>
+        <Route path="/">
+          <Login setUserToken={setUserToken} />
+        </Route>
+        <Route path="/publish">
+          {user ? <Publish userToken={user} /> : <Redirect to="/" />}
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
