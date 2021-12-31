@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .parentCheck-0 > input:checked + .checkImage {
+  @apply border-blue-500;
+} */

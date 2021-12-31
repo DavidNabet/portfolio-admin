@@ -1,0 +1,18 @@
+[
+    {"label": "Bootstrap", "value": "bootstrap"},
+    {"label": "Cloudinary", "value": "cloudinary"},
+    {"label": "CSS", "value": "css"},
+    {"label": "Express", "value": "express"},
+    {"label": "Git", "value": "git"},
+    {"label": "Github", "value": "github"},
+    {"label": "Heroku", "value": "heroku"},
+    {"label": "HTML", "value": "html"},
+    {"label": "Javascript", "value": "javascript"},
+    {"label": "Linkedin", "value": "linkedin"},
+    {"label": "MongoDB", "value": "mongodb"},
+    {"label": "Photoshop", "value": "photoshop"},
+    {"label": "react", "value": "react"},
+    {"label": "React Native", "value": "reactNative"},
+    {"label": "Stripe", "value": "Stripe"},
+    {"label": "Wordpress", "value": "wordpress"}
+]

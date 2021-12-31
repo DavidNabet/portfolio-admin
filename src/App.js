@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./components/Nav";
+import Nav from "./components/Nav";
 import {
   Switch,
   Route,
@@ -7,7 +7,7 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import Login from "./containers/Login";
-import Publish from "./containers/Publish";
+import { Publish } from "./containers/Publish";
 import Cookies from "js-cookie";
 function App() {
   const [user, setUser] = useState(Cookies.get("token") || null);
@@ -24,13 +24,17 @@ function App() {
 
   return (
     <Router>
-      <Header userToken={user} setUserToken={setUserToken} />
+      <Nav userToken={user} setUserToken={setUserToken} />
       <Switch>
-        <Route path="/">
-          <Login setUserToken={setUserToken} />
-        </Route>
         <Route path="/publish">
           {user ? <Publish userToken={user} /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/" exact>
+          {user ? (
+            <Redirect to="/publish" />
+          ) : (
+            <Login setUserToken={setUserToken} />
+          )}
         </Route>
       </Switch>
     </Router>

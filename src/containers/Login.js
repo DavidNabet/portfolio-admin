@@ -23,8 +23,11 @@ const Login = ({ setUserToken }) => {
           password: register.password,
         }
       );
-      if (status === 200) {
-        setRegister({});
+      if (status === 200 && data?.token) {
+        setRegister({
+          email: "",
+          password: "",
+        });
         setUserToken(data.token);
         history.push("/publish");
       }
@@ -49,7 +52,7 @@ const Login = ({ setUserToken }) => {
               Email
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-sky-300 focus:ring-1 focus:ring-sky-300 focus:shadow-outline"
               name="email"
               type="email"
               placeholder="Email"
@@ -65,24 +68,23 @@ const Login = ({ setUserToken }) => {
               Password
             </label>
             <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:border-sky-300 focus:ring-1 focus:ring-sky-300 focus:shadow-outline"
               name="password"
               type="password"
               placeholder="******************"
               value={register.password}
               onChange={handleInput}
             />
-            <p className="text-red-500 text-xs italic">
+            {/* <p className="text-red-500 text-xs italic">
               Please enter your password.
-            </p>
+            </p> */}
           </div>
           <div className="flex items-center justify-between">
-            <button
+            <input
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-            >
-              Log In
-            </button>
+              type="submit"
+              value="Log In"
+            />
           </div>
         </form>
       </div>
