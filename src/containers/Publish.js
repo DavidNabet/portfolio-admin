@@ -3,6 +3,7 @@ import Gallery from "../components/Gallery";
 import { MultiSelect } from "react-multi-select-component";
 import dataSkills from "../utils/skills.json";
 import axios from "axios";
+import List from "../components/List";
 
 export const Publish = ({ userToken }) => {
   const [cover, setCover] = useState({});
@@ -28,7 +29,6 @@ export const Publish = ({ userToken }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("cover", cover);
     formData.append("title", title);
     formData.append("description", description);
 
@@ -45,6 +45,8 @@ export const Publish = ({ userToken }) => {
         formData.append(`slide ${i}`, tabSlider[i]);
       }
     }
+
+    formData.append("cover", cover);
 
     try {
       const response = await axios.post(
@@ -67,13 +69,22 @@ export const Publish = ({ userToken }) => {
     <>
       <div className="relative flex flex-row">
         <Gallery slider={slider} setSlider={setSlider} />
-        <div className="fixed left-80 p-6 h-full">
+        <div className="relative p-6 h-full">
           <form className="w-screen max-w-lg" onSubmit={handleSubmit}>
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 <label className="block text-sm font-medium text-gray-700">
                   Sélectionner une image de couverture
                 </label>
+                {cover && (
+                  <div className="py-6">
+                    <img
+                      src={URL.createObjectURL(cover)}
+                      srcSet={URL.createObjectURL(cover)}
+                      className="object-cover"
+                    />
+                  </div>
+                )}
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                   <div className="space-y-1 text-center">
                     <svg
@@ -97,10 +108,10 @@ export const Publish = ({ userToken }) => {
                       >
                         <span>Upload a file</span>
                         <input
+                          style={{ display: "none" }}
                           id="cover"
                           type="file"
                           className="sr-only"
-                          required={true}
                           onChange={handleCover}
                         />
                       </label>
@@ -184,6 +195,7 @@ export const Publish = ({ userToken }) => {
             </div>
           </form>
         </div>
+        <List />
       </div>
     </>
   );
