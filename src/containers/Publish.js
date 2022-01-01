@@ -2,7 +2,7 @@ import { useState } from "react";
 import Gallery from "../components/Gallery";
 import { MultiSelect } from "react-multi-select-component";
 import dataSkills from "../utils/skills.json";
-import GalleryProvider, { useSelectImage } from "../context/GalleryContext";
+import axios from "axios";
 
 export const Publish = ({ userToken }) => {
   const [cover, setCover] = useState({});
@@ -10,17 +10,69 @@ export const Publish = ({ userToken }) => {
   const [description, setDescription] = useState("");
   const [skills, setSkills] = useState([]);
   const [slider, setSlider] = useState([]);
+  //
+  const [selected, setSelected] = useState([]);
+
+  const handleCover = (event) => {
+    setCover(event.target.files[0]);
+  };
+
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDescription = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("cover", cover);
+    formData.append("title", title);
+    formData.append("description", description);
+
+    const tabSkills = Object.values(skills);
+    const tabSlider = Object.values(selected);
+
+    for (let i = 0; i < tabSkills.length; i++) {
+      if (tabSkills[i] !== {}) {
+        formData.append(`check ${i}`, tabSkills[i]);
+      }
+    }
+    if (tabSlider.length > 0) {
+      for (let i = 0; i < tabSlider.length; i++) {
+        formData.append(`slide ${i}`, tabSlider[i]);
+      }
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3200/works/publish",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
-    <GalleryProvider>
-      <div className="flex flex-row">
+    <>
+      <div className="relative flex flex-row">
         <Gallery slider={slider} setSlider={setSlider} />
-        <div className="p-6 h-full">
-          <form className="max-w-lg">
+        <div className="fixed left-80 p-6 h-full">
+          <form className="w-screen max-w-lg" onSubmit={handleSubmit}>
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 <label className="block text-sm font-medium text-gray-700">
-                  Cover photo
+                  Sélectionner une image de couverture
                 </label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                   <div className="space-y-1 text-center">
@@ -40,62 +92,65 @@ export const Publish = ({ userToken }) => {
                     </svg>
                     <div className="flex text-sm text-gray-600">
                       <label
-                        htmlFor="file-upload"
+                        htmlFor="cover"
                         className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                       >
                         <span>Upload a file</span>
                         <input
-                          id="file-upload"
-                          name="file-upload"
+                          id="cover"
                           type="file"
                           className="sr-only"
+                          required={true}
+                          onChange={handleCover}
                         />
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>
-                    <p className="text-xs text-gray-500">
-                      PNG, JPG, GIF up to 10MB
-                    </p>
+                    <p className="text-xs text-gray-500">PNG, JPG, GIF</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-first-name"
-                >
-                  Title
-                </label>
+              <div className="w-full px-3">
                 <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                  id="grid-first-name"
+                  className="appearance-none block w-full text-gray-700 rounded py-2 px-4 mb-3 leading-tight focus:bg-white  focus:border-blue-200 border border-gray-300"
+                  id="title"
                   type="text"
-                  placeholder="Jane"
+                  placeholder="Title"
+                  value={title}
+                  onChange={handleTitle}
+                  required={true}
                 />
                 {/* <p className="text-red-500 text-xs italic">
                 Please fill out this field.
               </p> */}
               </div>
-              <div className="w-full md:w-1/2 px-3">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-last-name"
-                >
-                  Description
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-last-name"
-                  type="text"
-                  placeholder="Doe"
-                />
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3">
+                <textarea
+                  className="appearance-none block w-full text-gray-700 rounded py-2 px-4 leading-tight
+                  focus:bg-white focus:border-blue-200 border border-gray-300"
+                  id="description"
+                  rows={3}
+                  cols={6}
+                  placeholder="Description"
+                  value={description}
+                  required={true}
+                  onChange={handleDescription}
+                ></textarea>
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
+                <label
+                  htmlFor="skills"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Selectionner des compétences
+                </label>
                 <MultiSelect
                   options={dataSkills}
                   value={skills}
@@ -106,28 +161,30 @@ export const Publish = ({ userToken }) => {
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
-                <SelectImageSlider slider={slider} />
+                <label
+                  htmlFor="slider"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Selectionner des images
+                </label>
+                <MultiSelect
+                  options={slider}
+                  labelledBy="Select images"
+                  value={selected}
+                  onChange={setSelected}
+                />
               </div>
+            </div>
+            <div className="px-4 py-3 text-center sm:px-6">
+              <input
+                type="submit"
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                value="Envoyer"
+              />
             </div>
           </form>
         </div>
       </div>
-    </GalleryProvider>
-  );
-};
-
-export const SelectImageSlider = ({ slider }) => {
-  //
-  const [selected, setSelected] = useState([]);
-  return (
-    <>
-      <pre>{JSON.stringify(slider, null, 2)}</pre>
-      <MultiSelect
-        options={slider}
-        labelledBy="Select images"
-        value={selected}
-        onChange={setSelected}
-      />
     </>
   );
 };

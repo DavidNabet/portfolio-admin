@@ -11,7 +11,7 @@
     {"label": "Linkedin", "value": "linkedin"},
     {"label": "MongoDB", "value": "mongodb"},
     {"label": "Photoshop", "value": "photoshop"},
-    {"label": "react", "value": "react"},
+    {"label": "React", "value": "react"},
     {"label": "React Native", "value": "reactNative"},
     {"label": "Stripe", "value": "Stripe"},
     {"label": "Wordpress", "value": "wordpress"}
