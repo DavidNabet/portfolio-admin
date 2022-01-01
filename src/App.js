@@ -1,10 +1,43 @@
-import "./App.css";
-
+import { useState } from "react";
+import Nav from "./components/Nav";
+import {
+  Switch,
+  Route,
+  Redirect,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import Login from "./containers/Login";
+import { Publish } from "./containers/Publish";
+import Cookies from "js-cookie";
 function App() {
+  const [user, setUser] = useState(Cookies.get("token") || null);
+
+  const setUserToken = (token) => {
+    if (token) {
+      Cookies.set("token", token);
+      setUser(token);
+    } else {
+      Cookies.remove("token");
+      setUser(null);
+    }
+  };
+
   return (
-    <div>
-      Hello from <a href="https://www.lereacteur.io">Le Reacteur !</a>
-    </div>
+    <Router>
+      <Nav userToken={user} setUserToken={setUserToken} />
+      <Switch>
+        <Route path="/publish">
+          {user ? <Publish userToken={user} /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/" exact>
+          {user ? (
+            <Redirect to="/publish" />
+          ) : (
+            <Login setUserToken={setUserToken} />
+          )}
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
