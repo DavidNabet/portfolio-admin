@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useSelectImage } from "../context/GalleryContext";
+import { useState } from "react";
 const Image = ({ img, onCheck }) => {
   const { id, label, value } = img;
   const [isChecked, setIsChecked] = useState(false);

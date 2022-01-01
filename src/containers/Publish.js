@@ -6,7 +6,7 @@ import axios from "axios";
 import List from "../components/List";
 
 export const Publish = ({ userToken }) => {
-  const [cover, setCover] = useState({});
+  const [cover, setCover] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [skills, setSkills] = useState([]);
@@ -29,6 +29,7 @@ export const Publish = ({ userToken }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
+    formData.append("cover", cover);
     formData.append("title", title);
     formData.append("description", description);
 
@@ -45,8 +46,6 @@ export const Publish = ({ userToken }) => {
         formData.append(`slide ${i}`, tabSlider[i]);
       }
     }
-
-    formData.append("cover", cover);
 
     try {
       const response = await axios.post(
@@ -80,8 +79,8 @@ export const Publish = ({ userToken }) => {
                   <div className="py-6">
                     <img
                       src={URL.createObjectURL(cover)}
-                      srcSet={URL.createObjectURL(cover)}
                       className="object-cover"
+                      alt="file-upload"
                     />
                   </div>
                 )}
@@ -108,7 +107,6 @@ export const Publish = ({ userToken }) => {
                       >
                         <span>Upload a file</span>
                         <input
-                          style={{ display: "none" }}
                           id="cover"
                           type="file"
                           className="sr-only"

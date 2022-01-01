@@ -10,7 +10,7 @@ const List = ({}) => {
         <li className="border-gray-400 flex flex-row mb-2">
           <div className="shadow border select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4">
             <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-              <a href="#" className="block relative">
+              <a href="/" className="block relative">
                 <img
                   alt="profil"
                   src="/images/person/6.jpg"
@@ -28,7 +28,7 @@ const List = ({}) => {
         <li className="border-gray-400 flex flex-row mb-2">
           <div className="shadow border select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4">
             <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-              <a href="#" className="block relative">
+              <a href="/" className="block relative">
                 <img
                   alt="profil"
                   src="/images/person/10.jpg"
@@ -46,7 +46,7 @@ const List = ({}) => {
         <li className="border-gray-400 flex flex-row mb-2">
           <div className="shadow border select-none cursor-pointer bg-white rounded-md flex flex-1 items-center p-4">
             <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-              <a href="#" className="block relative">
+              <a href="/" className="block relative">
                 <img
                   alt="profil"
                   src="/images/person/3.jpg"
@@ -64,7 +64,7 @@ const List = ({}) => {
         <li className="border-gray-400 flex flex-row mb-2">
           <div className="shadow border select-none cursor-pointer bg-white  rounded-md flex flex-1 items-center p-4">
             <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-              <a href="#" className="block relative">
+              <a href="/" className="block relative">
                 <img
                   alt="profil"
                   src="/images/person/7.jpg"
