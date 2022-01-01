@@ -1,1 +1,3 @@
-/* Reset rules */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
