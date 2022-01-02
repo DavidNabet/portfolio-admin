@@ -3,10 +3,9 @@ import Gallery from "../components/Gallery";
 import { MultiSelect } from "react-multi-select-component";
 import dataSkills from "../utils/skills.json";
 import axios from "axios";
-import List from "../components/List";
 
 export const Publish = ({ userToken }) => {
-  const [cover, setCover] = useState();
+  const [cover, setCover] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [skills, setSkills] = useState([]);
@@ -36,14 +35,17 @@ export const Publish = ({ userToken }) => {
     const tabSkills = Object.values(skills);
     const tabSlider = Object.values(selected);
 
-    for (let i = 0; i < tabSkills.length; i++) {
-      if (tabSkills[i] !== {}) {
-        formData.append(`check ${i}`, tabSkills[i]);
+    console.log(cover);
+    console.log(tabSlider);
+
+    if (tabSkills.length > 0) {
+      for (let i = 0; i < tabSkills.length; i++) {
+        formData.append(`check ${i}`, JSON.stringify(tabSkills[i]));
       }
     }
     if (tabSlider.length > 0) {
       for (let i = 0; i < tabSlider.length; i++) {
-        formData.append(`slide ${i}`, tabSlider[i]);
+        formData.append(`slide ${i}`, JSON.stringify(tabSlider[i]));
       }
     }
 
@@ -60,7 +62,7 @@ export const Publish = ({ userToken }) => {
       );
       console.log(response.data);
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
     }
   };
 
@@ -193,7 +195,6 @@ export const Publish = ({ userToken }) => {
             </div>
           </form>
         </div>
-        <List />
       </div>
     </>
   );
