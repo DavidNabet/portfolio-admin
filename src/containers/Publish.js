@@ -7,6 +7,7 @@ import axios from "axios";
 export const Publish = ({ userToken }) => {
   const [cover, setCover] = useState(null);
   const [title, setTitle] = useState("");
+  const [source, setSource] = useState("");
   const [description, setDescription] = useState("");
   const [skills, setSkills] = useState([]);
   const [slider, setSlider] = useState([]);
@@ -25,17 +26,22 @@ export const Publish = ({ userToken }) => {
     setDescription(event.target.value);
   };
 
+  const handleSource = (event) => {
+    setSource(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("cover", cover);
     formData.append("title", title);
+    formData.append("source", source);
     formData.append("description", description);
 
     const tabSkills = Object.values(skills);
     const tabSlider = Object.values(selected);
 
-    console.log(cover);
+    console.log(source);
     console.log(tabSlider);
 
     if (tabSkills.length > 0) {
@@ -132,6 +138,22 @@ export const Publish = ({ userToken }) => {
                   placeholder="Title"
                   value={title}
                   onChange={handleTitle}
+                  required={true}
+                />
+                {/* <p className="text-red-500 text-xs italic">
+                Please fill out this field.
+              </p> */}
+              </div>
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3">
+                <input
+                  className="appearance-none block w-full text-gray-700 rounded py-2 px-4 mb-3 leading-tight focus:bg-white  focus:border-blue-200 border border-gray-300"
+                  id="source"
+                  type="text"
+                  placeholder="Lien Github"
+                  value={source}
+                  onChange={handleSource}
                   required={true}
                 />
                 {/* <p className="text-red-500 text-xs italic">
