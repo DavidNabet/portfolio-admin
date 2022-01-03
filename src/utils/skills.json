@@ -11,11 +11,13 @@
     {"label": "Javascript", "value": "javascript"},
     {"label": "Linkedin", "value": "linkedin"},
     {"label": "MongoDB", "value": "mongodb"},
-    {"label": "NodeJS", "value": "node"},
     {"label": "Netlify", "value": "netlify"},
+    {"label": "NextJS", "value": "next"},
+    {"label": "NodeJS", "value": "node"},
     {"label": "Photoshop", "value": "photoshop"},
     {"label": "React", "value": "react"},
     {"label": "React Native", "value": "reactNative"},
     {"label": "Stripe", "value": "Stripe"},
+    {"label": "Typescript", "value": "typescript"},
     {"label": "Wordpress", "value": "wordpress"}
 ]
