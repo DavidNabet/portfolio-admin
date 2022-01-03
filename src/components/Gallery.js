@@ -12,7 +12,9 @@ const Gallery = ({ slider, setSlider }) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get("http://localhost:3200/works/gallery");
+        const response = await axios.get(
+          `${process.env.REACT_APP_URI_BACK}/works/gallery`
+        );
 
         if (response.status === 200) {
           setIsLoading(false);

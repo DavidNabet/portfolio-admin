@@ -54,7 +54,7 @@ export const Publish = ({ userToken }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3200/works/publish",
+        `${process.env.REACT_APP_URI_BACK}/works/publish`,
         formData,
         {
           headers: {
