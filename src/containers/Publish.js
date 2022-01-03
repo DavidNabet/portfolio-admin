@@ -41,9 +41,6 @@ export const Publish = ({ userToken }) => {
     const tabSkills = Object.values(skills);
     const tabSlider = Object.values(selected);
 
-    console.log(source);
-    console.log(tabSlider);
-
     if (tabSkills.length > 0) {
       for (let i = 0; i < tabSkills.length; i++) {
         formData.append(`check ${i}`, JSON.stringify(tabSkills[i]));
