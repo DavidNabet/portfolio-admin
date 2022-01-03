@@ -1,6 +1,7 @@
 [
     {"label": "Bootstrap", "value": "bootstrap"},
     {"label": "Cloudinary", "value": "cloudinary"},
+    {"label": "Chakra-ui", "value": "chakra-ui"},
     {"label": "CSS", "value": "css"},
     {"label": "Express", "value": "express"},
     {"label": "Figma", "value": "figma"},
@@ -18,6 +19,7 @@
     {"label": "React", "value": "react"},
     {"label": "React Native", "value": "reactNative"},
     {"label": "Stripe", "value": "Stripe"},
+    {"label": "TailwindCSS", "value": "tailwind"},
     {"label": "Typescript", "value": "typescript"},
     {"label": "Wordpress", "value": "wordpress"}
 ]
