@@ -6,6 +6,7 @@ import axios from "axios";
 
 export const Publish = ({ userToken }) => {
   const [cover, setCover] = useState(null);
+  const [color, setColor] = useState("");
   const [title, setTitle] = useState("");
   const [source, setSource] = useState("");
   const [description, setDescription] = useState("");
@@ -35,6 +36,7 @@ export const Publish = ({ userToken }) => {
     const formData = new FormData();
     formData.append("cover", cover);
     formData.append("title", title);
+    formData.append("color", color);
     formData.append("source", source);
     formData.append("description", description);
 
@@ -127,6 +129,23 @@ export const Publish = ({ userToken }) => {
               </div>
             </div>
 
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3">
+                <input
+                  className="appearance-none block w-full text-gray-700 rounded py-2 px-4 mb-3 leading-tight focus:bg-white  focus:border-blue-200 border border-gray-300"
+                  id="color"
+                  type="text"
+                  placeholder="Color Hex"
+                  value={color}
+                  maxLength={7}
+                  onChange={(e) => setColor(e.target.value)}
+                  required={true}
+                />
+                {/* <p className="text-red-500 text-xs italic">
+                Please fill out this field.
+              </p> */}
+              </div>
+            </div>
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 <input
