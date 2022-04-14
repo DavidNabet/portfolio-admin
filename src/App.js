@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Cookies from "js-cookie";
+
 import Nav from "./components/Nav";
 import {
   Switch,
@@ -8,7 +10,6 @@ import {
 } from "react-router-dom";
 import Login from "./containers/Login";
 import { Publish } from "./containers/Publish";
-import Cookies from "js-cookie";
 function App() {
   const [user, setUser] = useState(Cookies.get("token") || null);
 

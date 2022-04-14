@@ -32,7 +32,7 @@ const Login = ({ setUserToken }) => {
         history.push("/publish");
       }
     } catch (err) {
-      console.log(err.message);
+      console.error(err);
     }
   };
 

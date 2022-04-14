@@ -68,7 +68,7 @@ export const Publish = ({ userToken }) => {
       console.log(response.data);
       window.location.reload(true);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

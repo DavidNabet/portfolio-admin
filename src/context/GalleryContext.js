@@ -1,16 +1,28 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 const Context = createContext();
 
+const initialState = {
+  arrImages: new Set(),
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_IMAGE":
+      state.arrImages.add(action.id);
+      return { ...state };
+    case "DELETE_IMAGE":
+      state.arrImages.remove(action.id);
+      return { ...state };
+  }
+  return state;
+};
 const Provider = ({ children }) => {
-  const [selectImage, setSelectImage] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const options = {
-    selectImage,
-    setSelectImage,
-  };
-
-  return <Context.Provider value={options}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
+  );
 };
 
 export const useSelectImage = () => useContext(Context);
