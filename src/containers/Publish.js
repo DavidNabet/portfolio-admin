@@ -8,7 +8,10 @@ export const Publish = ({ userToken }) => {
   const [cover, setCover] = useState(null);
   const [color, setColor] = useState("");
   const [title, setTitle] = useState("");
-  const [source, setSource] = useState("");
+  const [source, setSource] = useState({
+    github: "",
+    netlify: "",
+  });
   const [description, setDescription] = useState("");
   const [skills, setSkills] = useState([]);
   const [slider, setSlider] = useState([]);
@@ -28,7 +31,10 @@ export const Publish = ({ userToken }) => {
   };
 
   const handleSource = (event) => {
-    setSource(event.target.value);
+    setSource({
+      ...source,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -37,20 +43,29 @@ export const Publish = ({ userToken }) => {
     formData.append("cover", cover);
     formData.append("title", title);
     formData.append("color", color);
-    formData.append("source", source);
     formData.append("description", description);
 
     const tabSkills = Object.values(skills);
     const tabSlider = Object.values(selected);
+    const tabSource = Object.values(source);
 
     if (tabSkills.length > 0) {
-      for (let i = 0; i < tabSkills.length; i++) {
-        formData.append(`check ${i}`, JSON.stringify(tabSkills[i]));
+      for (let c = 0; c < tabSkills.length; c++) {
+        console.log(`check ${c}`, JSON.stringify(tabSkills[c]));
+        formData.append(`check ${c}`, JSON.stringify(tabSkills[c]));
       }
     }
     if (tabSlider.length > 0) {
       for (let i = 0; i < tabSlider.length; i++) {
+        console.log(`slide ${i}`, JSON.stringify(tabSlider[i]));
         formData.append(`slide ${i}`, JSON.stringify(tabSlider[i]));
+      }
+    }
+
+    if (tabSource.length > 0) {
+      for (let s = 0; s < tabSource.length; s++) {
+        console.log(JSON.stringify(tabSource[s]));
+        formData.append(`source ${s}`, tabSource[s]);
       }
     }
 
@@ -163,13 +178,29 @@ export const Publish = ({ userToken }) => {
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3">
+              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <input
                   className="appearance-none block w-full text-gray-700 rounded py-2 px-4 mb-3 leading-tight focus:bg-white  focus:border-blue-200 border border-gray-300"
-                  id="source"
+                  id="sourceGithub"
                   type="text"
+                  name="github"
                   placeholder="Lien Github"
-                  value={source}
+                  value={source.github}
+                  onChange={handleSource}
+                  required={true}
+                />
+                {/* <p className="text-red-500 text-xs italic">
+                Please fill out this field.
+              </p> */}
+              </div>
+              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <input
+                  className="appearance-none block w-full text-gray-700 rounded py-2 px-4 mb-3 leading-tight focus:bg-white  focus:border-blue-200 border border-gray-300"
+                  id="sourceNetlify"
+                  type="text"
+                  name="netlify"
+                  placeholder="Lien Netlify"
+                  value={source.netlify}
                   onChange={handleSource}
                   required={true}
                 />
