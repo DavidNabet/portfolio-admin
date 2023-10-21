@@ -3,9 +3,9 @@ import Cookies from "js-cookie";
 
 import Nav from "./components/Nav";
 import {
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
   BrowserRouter as Router,
 } from "react-router-dom";
 import Login from "./containers/Login";
@@ -15,10 +15,16 @@ function App() {
 
   const setUserToken = (token) => {
     if (token) {
-      Cookies.set("token", token);
+      Cookies.set("token", token, {
+        sameSite: "none",
+        secure: true,
+      });
       setUser(token);
     } else {
-      Cookies.remove("token");
+      Cookies.remove("token", {
+        sameSite: "none",
+        secure: true,
+      });
       setUser(null);
     }
   };
@@ -26,18 +32,24 @@ function App() {
   return (
     <Router>
       <Nav userToken={user} setUserToken={setUserToken} />
-      <Switch>
-        <Route path="/publish">
-          {user ? <Publish userToken={user} /> : <Redirect to="/" />}
-        </Route>
-        <Route path="/" exact>
-          {user ? (
-            <Redirect to="/publish" />
-          ) : (
-            <Login setUserToken={setUserToken} />
-          )}
-        </Route>
-      </Switch>
+      <Routes>
+        <Route
+          path="/"
+          exact
+          element={
+            user ? (
+              <Navigate to="/publish" />
+            ) : (
+              <Login setUserToken={setUserToken} />
+            )
+          }
+        />
+        <Route
+          path="/publish"
+          element={user ? <Publish userToken={user} /> : <Navigate to="/" />}
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </Router>
   );
 }

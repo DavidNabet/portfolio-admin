@@ -1,13 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setUserToken }) => {
   const [register, setRegister] = useState({
     email: "",
     password: "",
   });
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     setRegister({ ...register, [e.target.name]: e.target.value });
@@ -29,7 +29,7 @@ const Login = ({ setUserToken }) => {
           password: "",
         });
         setUserToken(data.token);
-        history.push("/publish");
+        navigate("/publish");
       }
     } catch (err) {
       console.error(err);

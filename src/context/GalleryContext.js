@@ -3,17 +3,21 @@ import { createContext, useContext, useReducer } from "react";
 const Context = createContext();
 
 const initialState = {
-  arrImages: new Set(),
+  selectedImage: new Set(),
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_IMAGE":
-      state.arrImages.add(action.id);
-      return { ...state };
+      return {
+        ...state,
+        payload: state.selectedImage.add(action.id),
+      };
     case "DELETE_IMAGE":
-      state.arrImages.remove(action.id);
-      return { ...state };
+      return {
+        ...state,
+        payload: state.selectedImage.remove(action.id),
+      };
   }
   return state;
 };
