@@ -187,7 +187,6 @@ export const Publish = ({ userToken }) => {
                   placeholder="Lien Github"
                   value={source.github}
                   onChange={handleSource}
-                  required={true}
                 />
                 {/* <p className="text-red-500 text-xs italic">
                 Please fill out this field.
